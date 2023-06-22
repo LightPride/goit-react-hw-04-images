@@ -7,6 +7,7 @@ export default function Modal({ handleModalClose, largeImage }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
+    // eslint-disable-next-line
   }, []);
 
   const handleKeyDown = event => {

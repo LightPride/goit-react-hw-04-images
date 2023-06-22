@@ -1,16 +1,15 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Gallery } from './ImageGallery.styled';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-import Modal from 'components/Modal/Modal';
 
 export default function ImageGallery({ images }) {
-  const [showModal, setShowModal] = useState(false);
-  const [modalImageURL, setModalImageUrl] = useState('');
+  // const [showModal, setShowModal] = useState(false);
+  // const [modalImageURL, setModalImageUrl] = useState('');
 
-  const toggleModal = modalImageURL => {
-    setModalImageUrl(modalImageURL);
-    setShowModal(!showModal);
-  };
+  // const toggleModal = modalImageURL => {
+  //   setModalImageUrl(modalImageURL);
+  //   setShowModal(!showModal);
+  // };
 
   return (
     <>
@@ -18,7 +17,7 @@ export default function ImageGallery({ images }) {
         {images.map(({ id, webformatURL, largeImageURL }) => {
           return (
             <ImageGalleryItem
-              toggleModal={toggleModal}
+              // toggleModal={toggleModal}
               key={id}
               webImage={webformatURL}
               largeImage={largeImageURL}
@@ -26,9 +25,6 @@ export default function ImageGallery({ images }) {
           );
         })}
       </Gallery>
-      {showModal && (
-        <Modal largeImage={modalImageURL} handleModalClose={toggleModal} />
-      )}
     </>
   );
 }
