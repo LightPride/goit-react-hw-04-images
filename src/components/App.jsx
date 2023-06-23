@@ -34,8 +34,17 @@ export default function App() {
             "We're sorry, but you've reached the end of search results."
           );
         }
+
+        const getNormalizedHits = hits =>
+          hits.map(({ id, largeImageURL, webformatURL, tags }) => {
+            return { id, largeImageURL, webformatURL, tags };
+          });
+
         setShowBtn(showBtn);
-        setImages(prevImages => [...prevImages, ...data.hits]);
+        setImages(prevImages => [
+          ...prevImages,
+          ...getNormalizedHits(data.hits),
+        ]);
 
         setStatus('resolved');
       } catch (error) {
@@ -60,11 +69,13 @@ export default function App() {
 
   const onLoadMore = () => {
     setPage(prevPage => prevPage + 1);
+    setStatus('pending');
+    setShowBtn(false);
   };
 
   return (
     <>
-      <SearchBar onSubmit={handleFormSubmit}></SearchBar>;
+      <SearchBar onSubmit={handleFormSubmit}></SearchBar>
       {status === 'idle' && (
         <h2
           style={{
@@ -75,7 +86,10 @@ export default function App() {
           Lets find some pictures!
         </h2>
       )}
-      {status === 'resolved' && <ImageGallery images={images}></ImageGallery>}
+      {(status === 'resolved' || status === 'pending') && (
+        <ImageGallery images={images}></ImageGallery>
+      )}
+      {status === 'pending' && <Loader />}
       {showBtn && <Button onClick={onLoadMore}></Button>}
       {status === 'rejected' && (
         <h1
@@ -87,7 +101,6 @@ export default function App() {
           {error.message}
         </h1>
       )}
-      {status === 'pending' && <Loader></Loader>}
     </>
   );
 }

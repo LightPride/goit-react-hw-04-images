@@ -3,18 +3,17 @@ import { ImgModal, Overlay } from './Modal.styled';
 
 export default function Modal({ handleModalClose, largeImage }) {
   useEffect(() => {
+    const handleKeyDown = event => {
+      if (event.key === 'Escape') {
+        handleModalClose();
+      }
+    };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [handleModalClose]);
 
-  const handleKeyDown = event => {
-    if (event.key === 'Escape') {
-      handleModalClose();
-    }
-  };
   const handleBackdropClose = event => {
     if (event.target === event.currentTarget) {
       handleModalClose();
